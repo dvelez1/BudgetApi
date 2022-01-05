@@ -7,11 +7,12 @@ namespace BudgetApi.Models
 {
     public partial class MasMonthlyExpense
     {
-        //public MasMonthlyExpense()
-        //{
-        //    ManualMonthlyExpenses = new HashSet<ManualMonthlyExpense>();
-        //    MonthlyExpenses = new HashSet<MonthlyExpense>();
-        //}
+        public MasMonthlyExpense()
+        {
+            ManualMonthlyCreditExpenses = new HashSet<ManualMonthlyCreditExpense>();
+            ManualMonthlyExpenses = new HashSet<ManualMonthlyExpense>();
+            MonthlyExpenses = new HashSet<MonthlyExpense>();
+        }
 
         public int MasMonthlyExpensesId { get; set; }
         public int Year { get; set; }
@@ -19,7 +20,8 @@ namespace BudgetApi.Models
         public decimal Income { get; set; }
         public int BiweeklyNumber { get; set; }
 
-        //public virtual ICollection<ManualMonthlyExpense> ManualMonthlyExpenses { get; set; }
-        //public virtual ICollection<MonthlyExpense> MonthlyExpenses { get; set; }
+        public virtual ICollection<ManualMonthlyCreditExpense> ManualMonthlyCreditExpenses { get; set; }
+        public virtual ICollection<ManualMonthlyExpense> ManualMonthlyExpenses { get; set; }
+        public virtual ICollection<MonthlyExpense> MonthlyExpenses { get; set; }
     }
 }

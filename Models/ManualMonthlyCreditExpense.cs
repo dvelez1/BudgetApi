@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace BudgetApi.Models
 {
-    public partial class MonthlyExpense
+    public partial class ManualMonthlyCreditExpense
     {
-        public int MontlyExpensesId { get; set; }
-        public int MasExpensesId { get; set; }
+        public int ManualMonthlyCreditExpensesId { get; set; }
         public int MasMonthlyExpensesId { get; set; }
+        public decimal Cost { get; set; }
         public decimal Payment { get; set; }
+        public string Description { get; set; }
 
-        public virtual MasExpense MasExpenses { get; set; }
         public virtual MasMonthlyExpense MasMonthlyExpenses { get; set; }
     }
 }

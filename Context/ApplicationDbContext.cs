@@ -19,6 +19,7 @@ namespace BudgetApi.Context
         public  DbSet<MasExpense> MasExpenses { get; set; }
         public  DbSet<MasMonthlyExpense> MasMonthlyExpenses { get; set; }
         public  DbSet<MonthlyExpense> MonthlyExpenses { get; set; }
+        public  DbSet<ManualMonthlyCreditExpense> ManualMonthlyCreditExpenses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -139,6 +140,39 @@ namespace BudgetApi.Context
                 //    .HasForeignKey(d => d.MasMonthlyExpensesId)
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_51");
+            });
+
+            modelBuilder.Entity<ManualMonthlyCreditExpense>(entity =>
+            {
+                entity.HasKey(e => e.ManualMonthlyCreditExpensesId)
+                    .HasName("PK_88");
+
+                entity.ToTable("manual_monthly_credit_expenses");
+
+                entity.HasIndex(e => e.MasMonthlyExpensesId, "FK_91");
+
+                entity.Property(e => e.ManualMonthlyCreditExpensesId).HasColumnName("manual_monthly_credit_expenses_id");
+
+                entity.Property(e => e.Cost)
+                    .HasColumnType("money")
+                    .HasColumnName("cost");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.MasMonthlyExpensesId).HasColumnName("mas_monthly_expenses_id");
+
+                entity.Property(e => e.Payment)
+                    .HasColumnType("money")
+                    .HasColumnName("payment");
+
+                entity.HasOne(d => d.MasMonthlyExpenses)
+                    .WithMany(p => p.ManualMonthlyCreditExpenses)
+                    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_89");
             });
 
             //OnModelCreatingPartial(modelBuilder);
