@@ -59,11 +59,11 @@ namespace BudgetApi.Context
                     .HasColumnType("money")
                     .HasColumnName("payment");
 
-                //entity.HasOne(d => d.MasMonthlyExpenses)
-                //    .WithMany(p => p.ManualMonthlyExpenses)
-                //    .HasForeignKey(d => d.MasMonthlyExpensesId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_81");
+                entity.HasOne(d => d.MasMonthlyExpenses)
+                    .WithMany(p => p.ManualMonthlyExpenses)
+                    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_81");
             });
 
             modelBuilder.Entity<MasExpense>(entity =>
@@ -129,17 +129,17 @@ namespace BudgetApi.Context
                     .HasColumnType("money")
                     .HasColumnName("payment");
 
-                //entity.HasOne(d => d.MasExpenses)
-                //    .WithMany(p => p.MonthlyExpenses)
-                //    .HasForeignKey(d => d.MasExpensesId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //  .HasConstraintName("FK_60");
+                entity.HasOne(d => d.MasExpenses)
+                    .WithMany(p => p.MonthlyExpenses)
+                    .HasForeignKey(d => d.MasExpensesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_60");
 
-                //entity.HasOne(d => d.MasMonthlyExpenses)
-                //    .WithMany(p => p.MonthlyExpenses)
-                //    .HasForeignKey(d => d.MasMonthlyExpensesId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_51");
+                entity.HasOne(d => d.MasMonthlyExpenses)
+                    .WithMany(p => p.MonthlyExpenses)
+                    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_51");
             });
 
             modelBuilder.Entity<ManualMonthlyCreditExpense>(entity =>
