@@ -33,6 +33,39 @@ namespace BudgetApi.Context
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
+            modelBuilder.Entity<ManualMonthlyCreditExpense>(entity =>
+            {
+                entity.HasKey(e => e.ManualMonthlyCreditExpensesId)
+                    .HasName("PK_88");
+
+                entity.ToTable("manual_monthly_credit_expenses");
+
+                entity.HasIndex(e => e.MasMonthlyExpensesId, "FK_91");
+
+                entity.Property(e => e.ManualMonthlyCreditExpensesId).HasColumnName("manual_monthly_credit_expenses_id");
+
+                entity.Property(e => e.Cost)
+                    .HasColumnType("money")
+                    .HasColumnName("cost");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.MasMonthlyExpensesId).HasColumnName("mas_monthly_expenses_id");
+
+                entity.Property(e => e.Payment)
+                    .HasColumnType("money")
+                    .HasColumnName("payment");
+
+                //entity.HasOne(d => d.MasMonthlyExpenses)
+                //    .WithMany(p => p.ManualMonthlyCreditExpenses)
+                //    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_89");
+            });
+
             modelBuilder.Entity<ManualMonthlyExpense>(entity =>
             {
                 entity.HasKey(e => e.ManualMonthlyExpensesId)
@@ -59,11 +92,11 @@ namespace BudgetApi.Context
                     .HasColumnType("money")
                     .HasColumnName("payment");
 
-                entity.HasOne(d => d.MasMonthlyExpenses)
-                    .WithMany(p => p.ManualMonthlyExpenses)
-                    .HasForeignKey(d => d.MasMonthlyExpensesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_81");
+                //entity.HasOne(d => d.MasMonthlyExpenses)
+                //    .WithMany(p => p.ManualMonthlyExpenses)
+                //    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_81");
             });
 
             modelBuilder.Entity<MasExpense>(entity =>
@@ -93,9 +126,7 @@ namespace BudgetApi.Context
 
                 entity.ToTable("mas_monthly_expenses");
 
-                entity.Property(e => e.MasMonthlyExpensesId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("mas_monthly_expenses_id");
+                entity.Property(e => e.MasMonthlyExpensesId).HasColumnName("mas_monthly_expenses_id");
 
                 entity.Property(e => e.BiweeklyNumber).HasColumnName("biweekly_number");
 
@@ -129,50 +160,17 @@ namespace BudgetApi.Context
                     .HasColumnType("money")
                     .HasColumnName("payment");
 
-                entity.HasOne(d => d.MasExpenses)
-                    .WithMany(p => p.MonthlyExpenses)
-                    .HasForeignKey(d => d.MasExpensesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                  .HasConstraintName("FK_60");
+                //entity.HasOne(d => d.MasExpenses)
+                //    .WithMany(p => p.MonthlyExpenses)
+                //    .HasForeignKey(d => d.MasExpensesId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_60");
 
-                entity.HasOne(d => d.MasMonthlyExpenses)
-                    .WithMany(p => p.MonthlyExpenses)
-                    .HasForeignKey(d => d.MasMonthlyExpensesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_51");
-            });
-
-            modelBuilder.Entity<ManualMonthlyCreditExpense>(entity =>
-            {
-                entity.HasKey(e => e.ManualMonthlyCreditExpensesId)
-                    .HasName("PK_88");
-
-                entity.ToTable("manual_monthly_credit_expenses");
-
-                entity.HasIndex(e => e.MasMonthlyExpensesId, "FK_91");
-
-                entity.Property(e => e.ManualMonthlyCreditExpensesId).HasColumnName("manual_monthly_credit_expenses_id");
-
-                entity.Property(e => e.Cost)
-                    .HasColumnType("money")
-                    .HasColumnName("cost");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(300)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.MasMonthlyExpensesId).HasColumnName("mas_monthly_expenses_id");
-
-                entity.Property(e => e.Payment)
-                    .HasColumnType("money")
-                    .HasColumnName("payment");
-
-                entity.HasOne(d => d.MasMonthlyExpenses)
-                    .WithMany(p => p.ManualMonthlyCreditExpenses)
-                    .HasForeignKey(d => d.MasMonthlyExpensesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_89");
+                //entity.HasOne(d => d.MasMonthlyExpenses)
+                //    .WithMany(p => p.MonthlyExpenses)
+                //    .HasForeignKey(d => d.MasMonthlyExpensesId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_51");
             });
 
             //OnModelCreatingPartial(modelBuilder);

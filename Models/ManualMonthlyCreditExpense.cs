@@ -13,6 +13,6 @@ namespace BudgetApi.Models
         public decimal Payment { get; set; }
         public string Description { get; set; }
 
-        public virtual MasMonthlyExpense MasMonthlyExpenses { get; set; }
+       // public virtual MasMonthlyExpense MasMonthlyExpenses { get; set; }
     }
 }
