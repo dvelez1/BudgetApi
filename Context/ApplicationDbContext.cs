@@ -98,9 +98,9 @@ namespace BudgetApi.Context
 
                 entity.Property(e => e.BiweeklyNumber).HasColumnName("biweekly_number");
 
-                entity.Property(e => e.Budget)
+                entity.Property(e => e.Income)
                     .HasColumnType("money")
-                    .HasColumnName("budget");
+                    .HasColumnName("income");
 
                 entity.Property(e => e.Month).HasColumnName("month");
 

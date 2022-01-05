@@ -16,7 +16,7 @@ namespace BudgetApi.Models
         public int MasMonthlyExpensesId { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }
-        public decimal Budget { get; set; }
+        public decimal Income { get; set; }
         public int BiweeklyNumber { get; set; }
 
         //public virtual ICollection<ManualMonthlyExpense> ManualMonthlyExpenses { get; set; }
