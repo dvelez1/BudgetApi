@@ -44,9 +44,10 @@ namespace BudgetApi.Controllers
             try
             {
                 var masMonthlyExpenses = await _context.MasMonthlyExpenses
-                    .Where(s=>s.Year == masMonthlyExpense.Year 
-                    && s.Month == masMonthlyExpense.Month 
-                    && s.BiweeklyNumber == masMonthlyExpense.BiweeklyNumber).FirstOrDefaultAsync();
+                    .Where(s => s.Year == masMonthlyExpense.Year
+                    && s.Month == masMonthlyExpense.Month
+                    && s.BiweeklyNumber == masMonthlyExpense.BiweeklyNumber).
+                    FirstOrDefaultAsync();
 
                 return Ok(masMonthlyExpenses);
             }
@@ -56,6 +57,11 @@ namespace BudgetApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Create new Entry on table MasMonthlyExpenses 
+        /// </summary>
+        /// <param name="masMonthlyExpense"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/[controller]/PostMasMonthlyExpenses")]
         public async Task<IActionResult> PostMasMonthlyExpenses([FromBody] MasMonthlyExpense masMonthlyExpense)
@@ -63,12 +69,51 @@ namespace BudgetApi.Controllers
             try
             {
                 _context.MasMonthlyExpenses.Add(masMonthlyExpense);
-                await _context.SaveChangesAsync();
-                return Ok(new { message = "Transaction successfully!" });
+                int masMonthlyExpensesIdentity = await _context.SaveChangesAsync();
+
+                var masExpenses = await _context.MasExpenses.
+                    Where(s => s.BiweeklyNumber == masMonthlyExpense.BiweeklyNumber).
+                    ToListAsync();
+
+                var result = await PostMonthlyExpensesAsync(masMonthlyExpensesIdentity, masExpenses);
+
+                if (result)
+                    return Ok(new { message = "Transaction successfully!" });
+                else
+                    return BadRequest("Error");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Create New Entry on table MonthlyExpenses. Method called from PostMasMonthlyExpenses
+        /// </summary>
+        /// <param name="masMonthlyExpensesIdentity"></param>
+        /// <param name="masExpenses"></param>
+        /// <returns></returns>
+        private async Task<bool> PostMonthlyExpensesAsync(int masMonthlyExpensesIdentity, List<MasExpense> masExpenses)
+        {
+            try
+            {
+                List<MonthlyExpense> monthlyExpenses = await _context.MonthlyExpenses.ToListAsync();
+
+                foreach (var item in masExpenses)
+                {
+                    monthlyExpenses.Add(new MonthlyExpense { MasMonthlyExpensesId = masMonthlyExpensesIdentity, MasExpensesId = item.MasExpensesId });
+                }
+
+                await _context.MonthlyExpenses.AddRangeAsync(monthlyExpenses);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 
