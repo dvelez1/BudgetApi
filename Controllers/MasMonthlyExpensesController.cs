@@ -38,7 +38,7 @@ namespace BudgetApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/[controller]/GetMasMonthlyExpesesById")]
         public async Task<IActionResult> GetMasMonthlyExpesesById(MasMonthlyExpense masMonthlyExpense)
         {
@@ -58,14 +58,13 @@ namespace BudgetApi.Controllers
             }
         }
 
-
         /// <summary>
         /// Create new Entry on table MasMonthlyExpenses 
         /// </summary>
         /// <param name="masMonthlyExpense"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/[controller]/CreatetMasMonthlyExpenses")]
+        //[Route("api/[controller]/CreatetMasMonthlyExpenses")]
         public async Task<IActionResult> CreatetMasMonthlyExpenses([FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
@@ -124,7 +123,7 @@ namespace BudgetApi.Controllers
         }
 
         [HttpPut]
-        [Route("api/[controller]/UpdatetMasMonthlyExpenses")]
+        //[Route("api/[controller]/UpdatetMasMonthlyExpenses")]
         public async Task<IActionResult> UpdatetMasMonthlyExpenses(int MasMonthlyExpensesId, [FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try

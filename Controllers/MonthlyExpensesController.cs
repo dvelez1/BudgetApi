@@ -1,4 +1,5 @@
 ﻿using BudgetApi.Context;
+using BudgetApi.Models;
 using BudgetApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,7 @@ namespace BudgetApi.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        [Route("api/[controller]/GetMonthlyExpesesByMasMonthlyExpensesId")]
+        [HttpGet]
         public async Task<IActionResult> GetMonthlyExpesesByMasMonthlyExpensesId(int masMonthlyExpensesId)
         {
             try
@@ -54,5 +54,31 @@ namespace BudgetApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdatetMonthlyExpeses(int MontlyExpensesId, [FromBody] MonthlyExpense monthlyExpense)
+        {
+            try
+            {
+                if (MontlyExpensesId != monthlyExpense.MontlyExpensesId)
+                    return NotFound();
+
+                var entity = await _context.MonthlyExpenses.FindAsync(MontlyExpensesId);
+
+                if (entity == null)
+                    return NotFound();
+
+                _context.Entry(entity).CurrentValues.SetValues(monthlyExpense);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Transaction updated successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

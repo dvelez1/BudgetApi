@@ -11,24 +11,24 @@ namespace BudgetApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManualMonthlyExpensesController : ControllerBase
+    public class ManualMonthlyCreditExpensesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ManualMonthlyExpensesController(ApplicationDbContext context)
+        public ManualMonthlyCreditExpensesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetManualMonthlyExpensesByMasMonthlyExpensesId(int masMonthlyExpensesId)
+        public async Task<IActionResult> GetManualMonthlyCreditExpensesByMasMonthlyExpensesId(int masMonthlyExpensesId)
         {
             try
             {
-                var manualMonthlyExpenses = await _context.ManualMonthlyExpenses
+                var manualMonthlyCreditExpenses = await _context.ManualMonthlyCreditExpenses
                     .Where(s => s.MasMonthlyExpensesId == masMonthlyExpensesId).ToListAsync();
 
-                return Ok(manualMonthlyExpenses);
+                return Ok(manualMonthlyCreditExpenses);
             }
             catch (Exception ex)
             {
@@ -37,11 +37,11 @@ namespace BudgetApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateManualMonthlyExpenses([FromBody] ManualMonthlyExpense manualMonthlyExpense)
+        public async Task<IActionResult> CreateManualCreditMonthlyExpenses([FromBody] ManualMonthlyCreditExpense manualMonthlyCreditExpense)
         {
             try
             {
-                _context.ManualMonthlyExpenses.Add(manualMonthlyExpense);
+                _context.ManualMonthlyCreditExpenses.Add(manualMonthlyCreditExpense);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Transaction inserted successfully!" });
@@ -53,19 +53,19 @@ namespace BudgetApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatetManualMonthlyExpenses(int manualMonthlyExpensesId, [FromBody] ManualMonthlyExpense manualMonthlyExpense)
+        public async Task<IActionResult> UpdatetManualMonthlyCreditExpenses(int manualMonthlyCreditExpensesId, [FromBody] ManualMonthlyCreditExpense manualMonthlyCreditExpense)
         {
             try
             {
-                if (manualMonthlyExpensesId != manualMonthlyExpense.ManualMonthlyExpensesId)
+                if (manualMonthlyCreditExpensesId != manualMonthlyCreditExpense.ManualMonthlyCreditExpensesId)
                     return NotFound();
 
-                var entity = await _context.ManualMonthlyExpenses.FindAsync(manualMonthlyExpensesId);
+                var entity = await _context.ManualMonthlyCreditExpenses.FindAsync(manualMonthlyCreditExpensesId);
 
                 if (entity == null)
                     return NotFound();
 
-                _context.Entry(entity).CurrentValues.SetValues(manualMonthlyExpense);
+                _context.Entry(entity).CurrentValues.SetValues(manualMonthlyCreditExpense);
 
                 await _context.SaveChangesAsync();
 
@@ -76,6 +76,5 @@ namespace BudgetApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }
