@@ -55,15 +55,15 @@ namespace BudgetApi.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdatetMonthlyExpeses(int MontlyExpensesId, [FromBody] MonthlyExpense monthlyExpense)
+        [HttpPut("{montlyExpensesId}")]
+        public async Task<IActionResult> UpdatetMonthlyExpeses(int montlyExpensesId, [FromBody] MonthlyExpense monthlyExpense)
         {
             try
             {
-                if (MontlyExpensesId != monthlyExpense.MontlyExpensesId)
+                if (montlyExpensesId != monthlyExpense.MontlyExpensesId)
                     return NotFound();
 
-                var entity = await _context.MonthlyExpenses.FindAsync(MontlyExpensesId);
+                var entity = await _context.MonthlyExpenses.FindAsync(montlyExpensesId);
 
                 if (entity == null)
                     return NotFound();
