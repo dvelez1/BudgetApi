@@ -84,7 +84,7 @@ namespace BudgetApi.Controllers
         /// <param name="masMonthlyExpense"></param>
         /// <returns></returns>
         [HttpPost]
-        //[Route("api/[controller]/CreatetMasMonthlyExpenses")]
+        [Route("CreatetMasMonthlyExpenses")]
         public async Task<IActionResult> CreatetMasMonthlyExpenses([FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
@@ -101,7 +101,12 @@ namespace BudgetApi.Controllers
                 var result = await CreatetMonthlyExpensesAsync(masMonthlyExpensesIdentity, masExpenses);
 
                 if (result)
-                    return Ok(new { message = "Transaction inserted successfully!" });
+                {
+                   var createdMasMonthlyExpense = await _context.MasMonthlyExpenses.FindAsync(masMonthlyExpensesIdentity);
+                    if (createdMasMonthlyExpense == null)
+                        return NotFound();
+                    return Ok(createdMasMonthlyExpense);
+                }
                 else
                 {
                     // TODO: Pending Rollback Implementation
@@ -144,14 +149,14 @@ namespace BudgetApi.Controllers
 
         [HttpPut]
         //[Route("api/[controller]/UpdatetMasMonthlyExpenses")]
-        public async Task<IActionResult> UpdatetMasMonthlyExpenses(int MasMonthlyExpensesId, [FromBody] MasMonthlyExpense masMonthlyExpense)
+        public async Task<IActionResult> UpdatetMasMonthlyExpenses(int masMonthlyExpensesId, [FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
             {
-                if (MasMonthlyExpensesId != masMonthlyExpense.MasMonthlyExpensesId)
+                if (masMonthlyExpensesId != masMonthlyExpense.MasMonthlyExpensesId)
                     return NotFound();
 
-                var entity = await _context.MasMonthlyExpenses.FindAsync(MasMonthlyExpensesId);
+                var entity = await _context.MasMonthlyExpenses.FindAsync(masMonthlyExpensesId);
 
                 if (entity == null)
                     return NotFound();
