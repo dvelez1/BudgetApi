@@ -52,7 +52,7 @@ namespace BudgetApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{manualMonthlyCreditExpensesId}")]
         public async Task<IActionResult> UpdatetManualMonthlyCreditExpenses(int manualMonthlyCreditExpensesId, [FromBody] ManualMonthlyCreditExpense manualMonthlyCreditExpense)
         {
             try
@@ -69,7 +69,7 @@ namespace BudgetApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Transaction updated successfully!" });
+                return Ok(entity);
             }
             catch (Exception ex)
             {

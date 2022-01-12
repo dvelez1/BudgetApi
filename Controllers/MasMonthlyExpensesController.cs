@@ -165,7 +165,7 @@ namespace BudgetApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Transaction updated successfully!" });
+                return Ok(entity);
             }
             catch (Exception ex)
             {
