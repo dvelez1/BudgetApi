@@ -20,7 +20,7 @@ namespace BudgetApi.Context
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetMasExpensesList")]
+        [Route("GetMasExpensesList")]
         public async Task<IActionResult> GetMasExpensesList()
         {
             try
@@ -35,7 +35,7 @@ namespace BudgetApi.Context
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetMasExpenses")]
+        [Route("GetMasExpenses")]
         public async Task<IActionResult> GetMasExpenses(int id)
         {
             try
