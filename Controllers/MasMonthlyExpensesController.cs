@@ -39,8 +39,28 @@ namespace BudgetApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetMasMonthlyExpesesById")]
-        public async Task<IActionResult> GetMasMonthlyExpesesById(MasMonthlyExpense masMonthlyExpense)
+        [Route("GetYearWithBudget")]
+        public async Task<IActionResult> GetYearWithBudget()
+        {
+            try
+            {
+                var masMonthlyExpenses = await _context.MasMonthlyExpenses.ToListAsync();
+                var yearsWithBudgetViewModels = masMonthlyExpenses.Select(m => new YearsWithBudgetViewModel
+                {
+                    Year = m.Year,
+                }).ToList();
+                return Ok(yearsWithBudgetViewModels);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpPost]
+        [Route("GetMasMonthlyExpensesByParameters")]
+        public async Task<IActionResult> GetMasMonthlyExpensesByParameters([FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
             {
