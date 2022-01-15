@@ -76,5 +76,26 @@ namespace BudgetApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{manualMonthlyCreditExpensesId}")]
+        public async Task<IActionResult> Delete(int manualMonthlyCreditExpensesId)
+        {
+            try
+            {
+                var manualMonthlyCreditExpense = await _context.ManualMonthlyCreditExpenses.FindAsync(manualMonthlyCreditExpensesId);
+
+                if (manualMonthlyCreditExpense == null)
+                    return NotFound();
+
+                _context.ManualMonthlyCreditExpenses.Remove(manualMonthlyCreditExpense);
+                await _context.SaveChangesAsync();
+
+                return Ok(manualMonthlyCreditExpense);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

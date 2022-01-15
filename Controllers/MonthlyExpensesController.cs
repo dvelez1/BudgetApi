@@ -29,7 +29,7 @@ namespace BudgetApi.Controllers
                 var monthlyExpenses = await _context.MonthlyExpenses
                     .Where(s => s.MasMonthlyExpensesId == masMonthlyExpensesId).
                     ToListAsync();
-
+                // me-> Monthly Expense / mase ->MasExpenses
                 var monthlyExpenseViewModels = monthlyExpenses.
                     Join(_context.MasExpenses, me => me.MasExpensesId, mase => mase.MasExpensesId,
                     (me, mase) => new { me, mase }).
@@ -40,7 +40,7 @@ namespace BudgetApi.Controllers
                         MasMonthlyExpensesId = m.me.MasMonthlyExpensesId,
                         MasExpensesId = m.me.MasExpensesId,
                         MasExpensesDescription = m.mase.Description,
-                        Budget = m.mase.Budget,
+                        Budget = m.me.Budget,
                         Payment = m.me.Payment,
                     }).ToList();
 
