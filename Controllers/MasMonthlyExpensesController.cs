@@ -48,7 +48,8 @@ namespace BudgetApi.Controllers
                 var yearsWithBudgetViewModels = masMonthlyExpenses.Select(m => new YearsWithBudgetViewModel
                 {
                     Year = m.Year,
-                }).ToList();
+                }).GroupBy(x=>x.Year)
+                  .Select(g=>g.First()).ToList();
                 return Ok(yearsWithBudgetViewModels);
             }
             catch (Exception ex)
@@ -129,11 +130,15 @@ namespace BudgetApi.Controllers
         {
             try
             {
-                List<MonthlyExpense> monthlyExpenses = await _context.MonthlyExpenses.ToListAsync();
+                List<MonthlyExpense> monthlyExpenses = new List<MonthlyExpense>(); //await _context.MonthlyExpenses.ToListAsync();
 
                 foreach (var item in masExpenses)
                 {
-                    monthlyExpenses.Add(new MonthlyExpense { MasMonthlyExpensesId = masMonthlyExpensesIdentity, MasExpensesId = item.MasExpensesId });
+                    monthlyExpenses.Add(new MonthlyExpense 
+                    { MasMonthlyExpensesId = masMonthlyExpensesIdentity,
+                        MasExpensesId = item.MasExpensesId,
+                        Budget = item.Budget
+                    });
                 }
 
                 await _context.MonthlyExpenses.AddRangeAsync(monthlyExpenses);
