@@ -85,8 +85,8 @@ namespace BudgetApi.Controllers
         /// <param name="masMonthlyExpense"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("CreatetMasMonthlyExpenses")]
-        public async Task<IActionResult> CreatetMasMonthlyExpenses([FromBody] MasMonthlyExpense masMonthlyExpense)
+        [Route("CreateMasMonthlyExpenses")]
+        public async Task<IActionResult> CreateMasMonthlyExpenses([FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
             {
