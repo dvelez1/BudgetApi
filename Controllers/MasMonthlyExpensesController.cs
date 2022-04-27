@@ -96,7 +96,7 @@ namespace BudgetApi.Controllers
                 int masMonthlyExpensesIdentity = masMonthlyExpense.MasMonthlyExpensesId;
 
                 var masExpenses = await _context.MasExpenses.
-                    Where(s => s.BiweeklyNumber == masMonthlyExpense.BiweeklyNumber).
+                    Where(s => s.BiweeklyNumber == masMonthlyExpense.BiweeklyNumber && s.Active == true).
                     ToListAsync();
 
                 var result = await CreatetMonthlyExpensesAsync(masMonthlyExpensesIdentity, masExpenses);

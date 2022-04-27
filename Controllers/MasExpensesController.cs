@@ -20,6 +20,7 @@ namespace BudgetApi.Controllers
             _context = context;
         }
 
+
         [HttpPost]
         [Route("CreateMasExpenses")]
         public async Task<IActionResult> CreateMasExpenses([FromBody] MasExpense masExpense)
@@ -85,9 +86,6 @@ namespace BudgetApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-
 
 
     }
