@@ -20,7 +20,7 @@ namespace BudgetApi.Context
         public  DbSet<MasMonthlyExpense> MasMonthlyExpenses { get; set; }
         public  DbSet<MonthlyExpense> MonthlyExpenses { get; set; }
         public  DbSet<ManualMonthlyCreditExpense> ManualMonthlyCreditExpenses { get; set; }
-
+ 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -117,6 +117,10 @@ namespace BudgetApi.Context
                 entity.Property(e => e.Description)
                     .HasMaxLength(300)
                     .HasColumnName("description");
+
+                entity.Property(e => e.Active)
+                    .HasColumnType("bit")
+                    .HasColumnName("active");
             });
 
             modelBuilder.Entity<MasMonthlyExpense>(entity =>

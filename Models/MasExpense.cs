@@ -16,6 +16,7 @@ namespace BudgetApi.Models
         public string Description { get; set; }
         public int BiweeklyNumber { get; set; }
         public decimal Budget { get; set; }
+        public bool Active { get; set; }
 
         //public virtual ICollection<MonthlyExpense> MonthlyExpenses { get; set; }
     }
