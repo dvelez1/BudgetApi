@@ -152,8 +152,8 @@ namespace BudgetApi.Controllers
             }
         }
 
-        [HttpPut]
-        //[Route("api/[controller]/UpdatetMasMonthlyExpenses")]
+               //[Route("api/[controller]/UpdatetMasMonthlyExpenses")]
+        [HttpPut("{masMonthlyExpensesId}")]
         public async Task<IActionResult> UpdatetMasMonthlyExpenses(int masMonthlyExpensesId, [FromBody] MasMonthlyExpense masMonthlyExpense)
         {
             try
